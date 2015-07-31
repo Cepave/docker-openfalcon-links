@@ -7,7 +7,7 @@ ENV WORKDIR=/home/links PACKDIR=/package PACKFILE=falcon-links.tar.gz CONFIGDIR=
 # Volume 
 VOLUME $CONFIGDIR $WORKDIR $PACKDIR
 
-# Install Open-Falcon Dashboard Component
+# Install Open-Falcon Links Component
 RUN \
   apt-get update && \
   apt-get install -y python-virtualenv python-dev python-mysqldb
