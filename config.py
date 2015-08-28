@@ -19,3 +19,4 @@ try:
     from frame.local_config import *
 except Exception, e:
     print "[warning] %s" % e
+
