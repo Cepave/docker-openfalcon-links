@@ -1,18 +1,22 @@
-FROM ubuntu:14.04.2
+FROM ubuntu:14.04
 
 MAINTAINER minimum@cepave.com
 
-ENV WORKDIR=/home/links PACKDIR=/package PACKFILE=falcon-links.tar.gz CONFIGDIR=/config CONFIGFILE=config.py
+ENV WORKDIR=/home/links PACKFILE=falcon-links.tar.gz CONFIGDIR=/config CONFIGFILE=config.py
 
 # Volume 
-VOLUME $CONFIGDIR $WORKDIR $PACKDIR
+VOLUME $CONFIGDIR
 
 # Install Open-Falcon Links Component
 RUN \
   apt-get update && \
   apt-get install -y python-virtualenv python-dev python-mysqldb
+ADD $PACKFILE $WORKDIR
 COPY $CONFIGFILE $CONFIGDIR/
-COPY $PACKFILE $PACKDIR/
+RUN \
+  ln -snf $CONFIGDIR/$CONFIGFILE $WORKDIR/frame/$CONFIGFILE && \
+  virtualenv $WORKDIR/env && \
+  pip install -r $WORKDIR/pip_requirements.txt
 
 WORKDIR /root
 COPY run.sh ./
