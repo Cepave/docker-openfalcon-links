@@ -2,7 +2,7 @@ FROM alpine:3.4
 
 MAINTAINER minimum@cepave.com
 
-ENV WORKDIR=/home/links PACKFILE=falcon-links.tar.gz CONFIGDIR=/config CONFIGFILE=config.py
+ENV WORKDIR=/home/links DOCKERDIR=docker/alpine PACKFILE=falcon-links.tar.gz CONFIGDIR=/config CONFIGFILE=config.py
 
 # Set timezone, bash, config dir
 # Set alias in the case of user want to execute control in their terminal
@@ -15,18 +15,19 @@ RUN \
 
 # Install Open-Falcon Links Component
 RUN apk add --no-cache python-dev py-virtualenv py-mysqldb
-ADD $PACKFILE $WORKDIR
-COPY $CONFIGFILE $CONFIGDIR/
+ADD $DOCKERDIR/$PACKFILE $WORKDIR
+COPY src/$CONFIGFILE $CONFIGDIR/
 RUN \
-  ln -snf $CONFIGDIR/$CONFIGFILE $WORKDIR/frame/$CONFIGFILE \
+  ln -sf $CONFIGDIR/$CONFIGFILE $WORKDIR/frame/$CONFIGFILE \
   && virtualenv $WORKDIR/env \
   && pip install -r $WORKDIR/pip_requirements.txt
 
 WORKDIR $WORKDIR
-COPY run.sh $WORKDIR
+COPY $DOCKERDIR/run.sh $WORKDIR/
 
 # Port
 EXPOSE 5090
 
 # Start
-CMD ["bash", "run.sh"]
+ENTRYPOINT ["/bin/bash"]
+CMD ["run.sh"]
