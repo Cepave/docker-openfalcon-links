@@ -5,7 +5,7 @@
 Enter the following command in the repo directory.
 
 ```
-$sudo docker build --force-rm=true -t openfalcon-links .
+$ docker build -t openfalcon-links -f docker/ubuntu/Dockerfile .
 ```
 
 ## Run
@@ -15,7 +15,7 @@ $sudo docker build --force-rm=true -t openfalcon-links .
 Use default configuration, and falcon-links package.
 
 ```
-$sudo docker run -dti --name links -p 5090:5090 openfalcon-links
+$ docker run -d --name links -p 5090:5090 openfalcon-links
 ```
 
 ### Advanced Run
@@ -28,5 +28,5 @@ $sudo docker run -dti --name links -p 5090:5090 openfalcon-links
 For example, **config.py** in /tmp/config,
 
 ```
-$sudo docker run -dti --name links -v /tmp/config/config.py:/config/config.py -p 5090:5090 openfalcon-links
+$ docker run -d --name links -v /tmp/config/config.py:/config/config.py -p 5090:5090 openfalcon-links
 ```
