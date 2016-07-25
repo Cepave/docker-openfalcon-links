@@ -5,7 +5,7 @@ MAINTAINER minimum@cepave.com
 ARG DOCKERDIR=docker/ubuntu
 ARG PACKFILE=falcon-links.tar.gz
 ARG CONFIGDIR=/config
-ENV WORKDIR=/home/links
+ENV WORKDIR=/home/links TZ=Asia/Taipei
 
 # Install Open-Falcon Links Component
 RUN \
